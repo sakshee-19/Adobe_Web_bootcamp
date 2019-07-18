@@ -22,22 +22,55 @@ class BugItem extends Component{
 	}
 }
 
-class BugTracker extends Component{
+class BugStats extends Component {
+	render() {
+		let {bugs} = this.props;
+		return (
+			<section className="stats">
+				<span className="closed">1</span>
+				<span> / </span>
+				<span>{bugs.length}</span>
+			</section>
+			);
+
+	}
+}
+
+class BugList extends Component {
+	render() {
+		let {bugs, toggle} = this.props;
+		let bugItems = bugs.map(bug => (<BugItem bug={bug} toggle={toggle} key={bug.id}></BugItem>));
+		return (<section className="list">
+		<ol>
+			{bugItems}					
+		</ol>
+		<input type="button" value="Remove Closed" />
+	</section>)
+	}
+}
+
+class BugEdit extends Component {
 	state = { newBugName : '' };
 	onAddNewClick = () => {
 		this.props.addNew(this.state.newBugName);
 	}
-	render(){
-		let { bugs, toggle } = this.props,
-			bugItems = bugs.map(bug => (<BugItem bug={bug} toggle={toggle} key={bug.id}></BugItem>));
 
+	render(){
+		return (
+			<section className="edit">
+				<label htmlFor="">Bug Name :</label>
+				<input type="text" onChange={ evt => this.setState({newBugName : evt.target.value}) }/>
+				<input type="button" value="Add New" onClick={ this.onAddNewClick }/>
+			</section>)
+	}
+}
+
+class BugTracker extends Component{
+	render(){
+		let { bugs, toggle, addNew } = this.props;
 		return(
 			<section>
-				<section className="stats">
-					<span className="closed">1</span>
-					<span> / </span>
-					<span>{bugs.length}</span>
-				</section>
+				<BugStats bugs={bugs}/>
 				<section className="sort">
 					<label htmlFor="">Order By :</label>
 					<select name="" id="">
@@ -47,17 +80,8 @@ class BugTracker extends Component{
 					<label htmlFor="">Descending ? :</label>
 					<input type="checkbox" name="" id="" />
 				</section>
-				<section className="edit">
-					<label htmlFor="">Bug Name :</label>
-					<input type="text" onChange={ evt => this.setState({newBugName : evt.target.value}) }/>
-					<input type="button" value="Add New" onClick={ this.onAddNewClick }/>
-				</section>
-				<section className="list">
-					<ol>
-						{bugItems}					
-					</ol>
-					<input type="button" value="Remove Closed" />
-				</section>
+				<BugEdit addNew={addNew}/>
+				<BugList bugs={bugs} toggle={toggle} />
 			</section>
 		)
 	}
