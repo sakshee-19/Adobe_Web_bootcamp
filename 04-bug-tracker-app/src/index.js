@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import BugTracker from './bugTracker';
+import Project from './project/index';
 import appStore from './store';
 import { Provider } from 'react-redux';
 
@@ -11,6 +12,10 @@ ReactDOM.render(
 		<Provider store={appStore}>
 			<div>
 				<BugTracker/>
+			</div>
+			<hr/>
+			<div>
+				<Project/>
 			</div>
 		</Provider>
 		, document.getElementById('root'));

@@ -27,7 +27,7 @@ class BugStats extends Component{
 		let { bugs }= this.props;
 		return(
 			<section className="stats">
-				<span className="closed">1</span>
+				<span className="closed">{(bugs.filter(proj=>proj.isClosed===true)).length}</span>
 				<span> / </span>
 				<span>{bugs.length}</span>
 			</section>

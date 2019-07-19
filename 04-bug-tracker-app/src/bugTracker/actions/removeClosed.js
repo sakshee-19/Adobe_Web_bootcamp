@@ -6,7 +6,7 @@ export function removeClosed(){
 
 		closedBugs
 			.forEach(closedBug => {
-				let action = { type : 'REMOVE', payload : closedBug};
+				let action = { type : 'REMOVE_BUG', payload : closedBug};
 				dispatch(action);
 			});
 	}
